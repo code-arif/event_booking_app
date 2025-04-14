@@ -66,7 +66,13 @@ class UserController extends Controller
             'phone' => 'required',
         ]);
 
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found',
+                'data' => null,
+            ]);
+        }
         $user->update($request->all());
         return response()->json([
             'message' => 'success',
@@ -78,13 +84,12 @@ class UserController extends Controller
     public function deleteUser($id)
     {
         $user = User::find($id);
-    
+
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
-    
+
         $user->delete();
         return response()->json(['message' => 'Delete success']);
     }
-    
 }

@@ -1,13 +1,12 @@
 <?php
 
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\BookingController;
 
 //site health check
 Route::get('check', function () {
@@ -29,4 +28,15 @@ Route::group(['prefix' => 'user'], function () {
 //=====================booking route=====================//
 Route::group(['prefix' => 'booking'], function () {
     Route::get('/', [BookingController::class, 'getAllBookings']);
+});
+
+//=====================auth route=====================//
+Route::post('/user-registration', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/user/{id}', [AuthController::class, 'user'])->middleware('auth:sanctum');
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+//====================event route=====================//
+Route::group(['prefix' => 'event'], function () {
+    Route::get('/', [EventController::class, 'getAllEvents']);
 });
