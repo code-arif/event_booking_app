@@ -1,9 +1,16 @@
 <script setup>
 import GuestLayout from '@/components/Layout/GuestLayout.vue'
 import api from '@/api/axios';
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import { useToast } from 'vue-toast-notification';
 
+
+const router = useRouter();
 const events = ref([]);
+const toast = useToast();
+
+
 onMounted(async () => {
   try {
     const res = await api.get('/event');
@@ -19,6 +26,17 @@ const formatedDate = (date) => {
   const d = new Date(date);
   return d.toLocaleString();
 }
+
+//booking-handling
+const handleBooking = (event) => {
+  const loggedInUser = localStorage.getItem('user');
+
+  if (!loggedInUser) {
+    toast.error('User not found');
+  } else {
+    toast.success(`User was logged in`);
+  }
+}
 </script>
 
 <template>
@@ -32,7 +50,7 @@ const formatedDate = (date) => {
               <p class="card-text">{{ event?.description }}</p>
               <p class="card-text">{{ formatedDate(event?.start_date) }}</p>
               <p class="card-text">{{ formatedDate(event?.end_date) }}</p>
-              <a href="#" class="btn btn-primary">Book</a>
+              <button @click="handleBooking(event)" class="btn btn-primary">Book</button>
             </div>
           </div>
         </div>

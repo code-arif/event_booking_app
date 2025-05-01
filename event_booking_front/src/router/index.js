@@ -3,6 +3,7 @@ import HomePage from "@/views/HomePage.vue";
 import LoginPage from "@/views/Auth/LoginPage.vue";
 import RegisterPage from "@/views/Auth/RegisterPage.vue";
 import DashboardPage from "@/views/DashboardPage.vue";
+import BookingConfirm from '@/views/BookingConfirm.vue';
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         path: '/dashboard',
         name: 'dashboard',
         component: DashboardPage,
+    },
+    {
+        path: '/booking-details',
+        name: 'booking-details',
+        component: BookingConfirm
     }
 ];
 

@@ -41,7 +41,9 @@ const register = async () => {
     toast.success(res.data.message);
     // Form reset after successful submission
     form.value = initialForm();
-    router.push('/login');
+    router.push('/login').then(() => {
+      // return window.location.reload();
+    });
   } catch (err) {
     if (err.response && err.response.status === 422) {
       errors.value = err.response.data.error;

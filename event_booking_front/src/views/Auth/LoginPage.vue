@@ -21,7 +21,7 @@ const login = async () => {
     });
     if (res.status) {
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", res.data);
+      localStorage.setItem("user", JSON.stringify(res.data.data));
       toast.success("Login successfully");
       router.push("/");
     }
