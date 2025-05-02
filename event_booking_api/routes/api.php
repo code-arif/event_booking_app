@@ -28,6 +28,7 @@ Route::group(['prefix' => 'user'], function () {
 //=====================booking route=====================//
 Route::group(['prefix' => 'booking'], function () {
     Route::get('/', [BookingController::class, 'getAllBookings']);
+    Route::post('/create', [BookingController::class, 'createBooking']);
 });
 
 //=====================auth route=====================//

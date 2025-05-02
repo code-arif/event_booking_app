@@ -15,4 +15,9 @@ class Booking extends Model
     public function event(){
         return $this->belongsTo(Event::class);
     }
+
+    //protected fillable
+    protected $fillable = [
+        'user_id', 'event_id', 'ticket_qty', 'total_price', 'status'
+    ];
 }
