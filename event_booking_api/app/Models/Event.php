@@ -10,4 +10,8 @@ class Event extends Model
     public function booking(){
         return $this->hasMany(Booking::class);
     }
+
+    protected $fillable = [
+        'title', 'description', 'ticket_price', 'start_date', 'end_date'
+    ];
 }

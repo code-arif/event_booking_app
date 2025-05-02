@@ -1,10 +1,10 @@
 <template>
   <DashboardLayout>
     <div class="row p-3">
-      <div class="col-md-4">
-        Home
+      <div class="col-md-12 mb-2 pb-2 pt-2" style="border: 1px solid #ddd">
+        <h4> Member Dashboard </h4>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-12"  style="border: 1px solid #ddd">
         <ul class="list-unstyled" v-if="loggedUser">
           <li>Name: {{ loggedUser.name }}</li>
           <li>Email: {{ loggedUser.email }}</li>

@@ -20,10 +20,18 @@ const login = async () => {
       password: password.value
     });
     if (res.status) {
+      const userData = res.data.data;
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.data));
       toast.success("Login successfully");
-      router.push("/");
+
+      setTimeout(() => {
+        if (userData.role === "admin") {
+          router.push("/admin");
+        } else if (userData.role === "user") {
+          router.push("/member-dashboard");
+        }
+      }, 1000);
     }
   } catch (err) {
     if (err.response && err.response.status === 422) {

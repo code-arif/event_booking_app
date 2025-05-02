@@ -1,9 +1,9 @@
 <script setup>
 import GuestLayout from '@/components/Layout/GuestLayout.vue'
 import api from '@/api/axios';
-import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
-import { useToast } from 'vue-toast-notification';
+import {onMounted, ref} from "vue";
+import {useRouter} from "vue-router";
+import {useToast} from 'vue-toast-notification';
 
 
 const router = useRouter();
@@ -32,9 +32,13 @@ const handleBooking = (event) => {
   const loggedInUser = localStorage.getItem('user');
 
   if (!loggedInUser) {
-    toast.error('User not found');
+    toast.error('please log in');
+    router.push('/login');
   } else {
-    toast.success(`User was logged in`);
+    router.push({
+      path: '/event-details',
+      query: {event_id: event.id},
+    });
   }
 }
 </script>
@@ -43,11 +47,12 @@ const handleBooking = (event) => {
   <GuestLayout>
     <div class="container">
       <div class="row">
-        <div class="col-md-3" v-for="event in events" :key="event.id">
+        <div class="col-md-4" v-for="event in events" :key="event.id">
           <div class="card mt-5" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">{{ event?.title }}</h5>
               <p class="card-text">{{ event?.description }}</p>
+              <p class="card-text">{{ event?.ticket_price }} Tk</p>
               <p class="card-text">{{ formatedDate(event?.start_date) }}</p>
               <p class="card-text">{{ formatedDate(event?.end_date) }}</p>
               <button @click="handleBooking(event)" class="btn btn-primary">Book</button>

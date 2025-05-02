@@ -2,10 +2,16 @@
 import {RouterLink} from "vue-router";
 import {useRouter} from "vue-router";
 const router = useRouter();
+import {computed} from "vue";
 
 const loggedUser = () => {
   return localStorage.getItem("token") ? true : false;
 };
+
+const userRole = computed(() => {
+  const userData = JSON.parse(localStorage.getItem("user"));
+  return userData.role == 'admin' ? 'admin' : 'user';
+});
 
 const logout = () => {
   localStorage.removeItem("token");
@@ -34,10 +40,11 @@ const logout = () => {
 
               <template v-else>
                 <li class="nav-item">
-                  <RouterLink class="nav-link" :to="{name: 'dashboard'}">Dashboard</RouterLink>
+                  <RouterLink v-if="userRole == 'admin' " class="nav-link" :to="{name: 'admin'}">Admin Dashboard</RouterLink>
+                  <RouterLink v-if="userRole == 'user' " class="nav-link" :to="{name: 'member-dashboard'}">Member Dashboard</RouterLink>
                 </li>
                 <li class="nav-item">
-                  <button class="btn btn-primary" @click="logout">Logout</button>
+                  <button class="btn btn-primary ml-3" @click="logout">Logout</button>
                 </li>
               </template>
             </ul>

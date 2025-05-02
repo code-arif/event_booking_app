@@ -39,4 +39,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanct
 //====================event route=====================//
 Route::group(['prefix' => 'event'], function () {
     Route::get('/', [EventController::class, 'getAllEvents']);
+    Route::get('/{event}', [EventController::class, 'getEvent']);
+    Route::put('/update/{id}', [EventController::class, 'updateEvent']);
 });
