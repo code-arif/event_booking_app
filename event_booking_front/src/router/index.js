@@ -8,6 +8,9 @@ import AdminDashboard from "@/views/AdminDashboard.vue";
 import AdminProfile from "@/components/Admin/AdminProfile.vue";
 import Events from "@/components/Admin/Events.vue";
 import EventEdit from "@/components/Admin/EventEdit.vue";
+import MemberBooking from "@/views/MemberBooking.vue";
+import Bookings from "@/components/Admin/Bookings.vue";
+import BookingStatusUpdate from "@/components/Admin/BookingStatusUpdate.vue";
 
 const routes = [
     {
@@ -34,19 +37,21 @@ const routes = [
         name: 'admin',
         component: AdminDashboard,
         children: [
-            {
-                path: 'admin-profile', component: AdminProfile,
-            }, {
-                path: 'events', component: Events,
-            }, {
-                path: 'event/edit/:id', component: EventEdit,
-            }
+            {path: 'admin-profile', component: AdminProfile,},
+            {path: 'events', component: Events},
+            {path: 'event/edit/:id', component: EventEdit},
+            {path: 'bookings', component: Bookings},
+            {path: 'booking/edit/:id', component: BookingStatusUpdate},
         ]
     },
     {
         path: '/event-details',
         name: 'event-details',
         component: BookingConfirm
+    }, {
+        path: '/member-bookings',
+        name: 'member-bookings',
+        component: MemberBooking,
     }
 ];
 

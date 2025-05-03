@@ -53,7 +53,7 @@ import DashboardLayout from "@/components/Layout/DashboardLayout.vue";
 import {ref, computed, onMounted} from 'vue';
 import api from "@/api/axios.js";
 import {useToast} from "vue-toast-notification";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 
 const loggedUser = ref(null);
 const apiUrl = 'http://127.0.0.1:8000';
@@ -61,6 +61,7 @@ const event = ref({});
 const route = useRoute();
 const ticket_qty = ref(1);
 const toast = useToast();
+const router = useRouter();
 
 onMounted(() => {
   const user = localStorage.getItem('user');
@@ -92,6 +93,10 @@ const bookingConfirm = () => {
     ticket_qty: ticket_qty.value,
   }).then((response) => {
     toast.success("Booking confirmed successfully!");
+
+    setTimeout(() => {
+      router.push('/member-bookings');
+    })
   }).catch((error) => {
     toast.error("Booking failed!");
   });

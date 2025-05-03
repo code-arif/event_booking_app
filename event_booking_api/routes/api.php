@@ -29,6 +29,9 @@ Route::group(['prefix' => 'user'], function () {
 Route::group(['prefix' => 'booking'], function () {
     Route::get('/', [BookingController::class, 'getAllBookings']);
     Route::post('/create', [BookingController::class, 'createBooking']);
+    Route::get('/member/{id}', [BookingController::class, 'getMemberBookings']);
+    Route::get('/by/{id}', [BookingController::class, 'getBookingById']);
+    Route::put('/status-change/{id}', [BookingController::class, 'changeBookingStatus']);
 });
 
 //=====================auth route=====================//

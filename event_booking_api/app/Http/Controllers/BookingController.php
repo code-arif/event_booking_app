@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BookingStatusUpdateNotification;
 use App\Models\Booking;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -49,8 +50,68 @@ class BookingController extends Controller
         return response()->json(
             [
                 'status' => true,
-                'message' => 'Evend successfully booked! thank you.',
+                'message' => 'Event successfully booked! thank you.',
                 'data' => $booking,
+            ],
+            200,
+        );
+    }
+
+    //get siggel memerb bookings
+    public function getMemberBookings(Request $request){
+        $bookings = Booking::with(['user', 'event'])->where('user_id', $request->id)->get();
+
+        if(!$bookings){
+            return response()->json([
+                'status' => false,
+                'message' => 'No bookings found!'
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Bookins render successfully',
+            'data' => $bookings
+        ]);
+    }
+
+    //booking by id
+    public function getBookingById(Request $request){
+        $booking = Booking::with(['user', 'event'])->where('id', $request->id)->first();
+        return response()->json([
+            'message' => 'Bookings retrieved',
+            'data' => $booking,
+        ]);
+    }
+
+    //change booking status
+    public function changeBookingStatus(Request $request){
+        $validator = Validator::make($request->all(), [
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'error' => $validator->messages(),
+                ],
+                422,
+            );
+        }
+
+        $booking = Booking::findOrFail($request->id);
+
+        $booking->update($request->all());
+        $bookingData = Booking::with(['user', 'event'])->where('id', $request->id)->first();
+        
+        event(new BookingStatusUpdateNotification($bookingData));
+
+        return response()->json(
+            [
+                'status' => true,
+                'message' => 'Status updated successfully',
+                'data' => $booking->status
             ],
             200,
         );

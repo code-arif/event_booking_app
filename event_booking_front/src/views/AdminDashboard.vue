@@ -19,6 +19,9 @@ import {RouterLink, RouterView} from "vue-router";
               <li>
                 <RouterLink to="/admin/events"> Events </RouterLink>
               </li>
+              <li>
+                <RouterLink to="/admin/bookings"> Bookings </RouterLink>
+              </li>
             </ul>
           </div>
 

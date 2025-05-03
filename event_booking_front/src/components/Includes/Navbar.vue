@@ -1,6 +1,7 @@
 <script setup>
 import {RouterLink} from "vue-router";
 import {useRouter} from "vue-router";
+
 const router = useRouter();
 import {computed} from "vue";
 
@@ -24,31 +25,46 @@ const logout = () => {
     <div class="row">
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <RouterLink class="nav-link" :to="{name: 'home'}" active-class="active" exact-active-class="active">Home
+              </RouterLink>
+            </li>
+            <template v-if="!loggedUser()">
               <li class="nav-item">
-                <RouterLink class="nav-link" :to="{name: 'home'}" active-class="active" exact-active-class="active">Home</RouterLink>
+                <RouterLink class="nav-link" :to="{name: 'login'}" active-class="active" exact-active-class="active">
+                  Login
+                </RouterLink>
               </li>
-              <template v-if="!loggedUser()">
-                <li class="nav-item">
-                  <RouterLink class="nav-link" :to="{name: 'login'}" active-class="active" exact-active-class="active">Login</RouterLink>
-                </li>
-                <li class="nav-item">
-                  <RouterLink class="nav-link" :to="{name: 'register'}" active-class="active" exact-active-class="active">Registration</RouterLink>
-                </li>
-              </template>
+              <li class="nav-item">
+                <RouterLink class="nav-link" :to="{name: 'register'}" active-class="active" exact-active-class="active">
+                  Registration
+                </RouterLink>
+              </li>
+            </template>
 
-              <template v-else>
-                <li class="nav-item">
-                  <RouterLink v-if="userRole == 'admin' " class="nav-link" :to="{name: 'admin'}">Admin Dashboard</RouterLink>
-                  <RouterLink v-if="userRole == 'user' " class="nav-link" :to="{name: 'member-dashboard'}">Member Dashboard</RouterLink>
-                </li>
-                <li class="nav-item">
-                  <button class="btn btn-primary ml-3" @click="logout">Logout</button>
-                </li>
-              </template>
-            </ul>
-          </div>
+            <template v-else>
+              <li class="nav-item">
+                <RouterLink v-if="userRole == 'admin' " class="nav-link" :to="{name: 'admin'}">Admin Dashboard
+                </RouterLink>
+              </li>
+
+              <li class="nav-item">
+                <RouterLink v-if="userRole == 'user' " class="nav-link" :to="{name: 'member-dashboard'}">Member
+                  Dashboard
+                </RouterLink>
+              </li>
+
+              <li class="nav-item">
+                <RouterLink v-if="userRole == 'user' " class="nav-link" :to="{name: 'member-bookings'}"> My bookins
+                </RouterLink>
+              </li>
+
+              <li class="nav-item">
+                <button class="btn btn-primary ml-3" @click="logout">Logout</button>
+              </li>
+            </template>
+          </ul>
         </div>
       </nav>
     </div>
